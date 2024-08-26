@@ -1,0 +1,29 @@
+# Este workflow realiza uma instalação limpa das dependências do Node, faz cache/restore delas, 
+# constrói o código fonte e executa testes em diferentes versões do Node.
+# Para mais informações, consulte: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18.19.1
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm test
